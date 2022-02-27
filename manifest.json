@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+
+    "name": "Screamer",
+    "description": "Taking the social out of social media, and the media part for that matter too...",
+    "version": "1.0",
+
+    "content_scripts": [
+        {
+            "matches": ["https://twitter.com/home"],
+            "js": ["main.js"]
+        }
+    ],
+    "web_accessible_resources": ["aaaaaaaaaaaaaaaaa.png"]
+}
