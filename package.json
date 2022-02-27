@@ -1,0 +1,17 @@
+{
+  "name": "screamer-extension",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "shimmy568",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "ts-loader": "^9.2.6",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2"
+  }
+}
