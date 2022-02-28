@@ -51,14 +51,14 @@ function injectLoadingScreen(): HTMLDivElement {
 
     // Setup the loading gif and splash art
     let loadingIcon = document.createElement('img');
-    loadingIcon.src = chrome.runtime.getURL('loading.gif');
+    loadingIcon.src = chrome.runtime.getURL('images/loading.gif');
     loadingIcon.style.display = 'block';
     loadingIcon.style.margin = 'auto';
     loadingIcon.style.paddingTop = '20px';
     loadingIcon.style.width = '50px';
 
     let custom_icon = document.createElement('img');
-    custom_icon.src = chrome.runtime.getURL('aaaaaaaaaaaaaaaaa.png');
+    custom_icon.src = chrome.runtime.getURL('images/aaaaaaaaaaaaaaaaa.png');
     custom_icon.style.display = 'block';
     custom_icon.style.margin = 'auto';
     custom_icon.style.width = '300px';
