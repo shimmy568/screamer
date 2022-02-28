@@ -17,6 +17,22 @@ const twitterSelectors = {
         'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1niwhzg.r-1loqt21.r-1pi2tsx.r-1ny4l3l.r-o7ynqc.r-6416eg.r-13qz1uu',
 };
 
+function pickCreepyMessage(): string {
+    let messages = [
+        'Can anyone hear me?',
+        'Is anyone there?',
+        'Where am I? Where is this?',
+        'What does any of this mean?',
+        'Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        'God please make it stop',
+        'Someone send help, please...',
+        'How long has it been...',
+        'When will they come back?',
+    ];
+
+    return messages[Math.floor(Math.random() * messages.length)];
+}
+
 function injectLoadingScreen(): HTMLDivElement {
     // Setup div that will cover the entire page while it loads
     let loadingPage = document.createElement('div');
@@ -69,7 +85,7 @@ function clearPage() {
     // Modify text on page and other stuff
     $(twitterSelectors.homeText).first().text('Home?');
     $(twitterSelectors.tweetText).first().text('Scream!');
-    $(twitterSelectors.bodyPlaceholderText).first().text('Can anyone hear me?');
+    $(twitterSelectors.bodyPlaceholderText).first().text(pickCreepyMessage());
     $(twitterSelectors.profilePicture).css('pointer-events', 'none'); // Prevent user from leaving page
 }
 
@@ -77,7 +93,7 @@ function clearPage() {
  * Make sure that the only page that a user can view is /home
  */
 function lockHomepage() {
-    if (window.location.pathname != '/home') {
+    if (window.location.pathname != '/home' && window.location.pathname != '/i/foundmedia/search') {
         window.location.assign('https://twitter.com/home');
     }
 
