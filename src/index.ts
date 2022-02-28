@@ -70,8 +70,7 @@ function clearPage() {
     $(twitterSelectors.homeText).first().text('Home?');
     $(twitterSelectors.tweetText).first().text('Scream!');
     $(twitterSelectors.bodyPlaceholderText).first().text('Can anyone hear me?');
-    var a = $(twitterSelectors.profilePicture).css('pointer-events', 'none');
-    console.log(a);
+    $(twitterSelectors.profilePicture).css('pointer-events', 'none'); // Prevent user from leaving page
 }
 
 /**
