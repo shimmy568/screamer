@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/shimmy568/screamer"><img src="https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.png" alt="Screamer" width="200"></a>
+  <a href="https://github.com/shimmy568/screamer"><img src="https://raw.githubusercontent.com/shimmy568/screamer/main/app/imgs/header.png" alt="Screamer" width="200"></a>
   <br>
   Screamer - A Twitter Improvement Suite
   <br>
