@@ -1,5 +1,10 @@
 import $ from 'jquery';
 
+let loaded = false;
+let loggingIn = false;
+
+let oldLocation = '';
+
 // All the different css selectors we're going to use to get elements on the page
 const twitterSelectors = {
     leftSidebar: '.css-1dbjc4n.r-obd0qt.r-16y2uox.r-lrvibr.r-1g40b8q',
@@ -15,19 +20,23 @@ const twitterSelectors = {
     bodyPlaceholderText: '.public-DraftEditorPlaceholder-inner',
     profilePicture:
         'a.css-4rbku5.css-18t94o4.css-1dbjc4n.r-1niwhzg.r-1loqt21.r-1pi2tsx.r-1ny4l3l.r-o7ynqc.r-6416eg.r-13qz1uu',
+    loginButton: '[data-testid="loginButton"]',
+    favicon: '[rel="shortcut icon"]',
 };
 
+// heheheh
 function pickCreepyMessage(): string {
     let messages = [
         'Can anyone hear me?',
         'Is anyone there?',
         'Where am I? Where is this?',
         'What does any of this mean?',
-        'Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         'God please make it stop',
         'Someone send help, please...',
         'How long has it been...',
         'When will they come back?',
+        'Why can\'t I see anything?'
     ];
 
     return messages[Math.floor(Math.random() * messages.length)];
@@ -49,7 +58,7 @@ function injectLoadingScreen(): HTMLDivElement {
 
     document.body.appendChild(loadingPage);
 
-    // Setup the loading gif and splash art
+    // Setup the loading gif
     let loadingIcon = document.createElement('img');
     loadingIcon.src = chrome.runtime.getURL('images/loading.gif');
     loadingIcon.style.display = 'block';
@@ -57,12 +66,14 @@ function injectLoadingScreen(): HTMLDivElement {
     loadingIcon.style.paddingTop = '20px';
     loadingIcon.style.width = '50px';
 
+    // Setup splash art in middle of loading page
     let custom_icon = document.createElement('img');
     custom_icon.src = chrome.runtime.getURL('images/aaaaaaaaaaaaaaaaa.png');
     custom_icon.style.display = 'block';
     custom_icon.style.margin = 'auto';
     custom_icon.style.width = '300px';
 
+    // Setup container that holds splash art and loading icon
     let innerContainer = document.createElement('div');
     innerContainer.appendChild(custom_icon);
     innerContainer.appendChild(loadingIcon);
@@ -70,6 +81,14 @@ function injectLoadingScreen(): HTMLDivElement {
     loadingPage.appendChild(innerContainer);
 
     return loadingPage;
+}
+
+function isFeedLoaded(): boolean {
+    return $(twitterSelectors.feed).not('.r-184en5c').length != 0;
+}
+
+function setRandomPlaceholderText() {
+    $(twitterSelectors.bodyPlaceholderText).first().text(pickCreepyMessage()); // Pick random message for placeholder text
 }
 
 function clearPage() {
@@ -83,21 +102,61 @@ function clearPage() {
     $(twitterSelectors.sparkleButton).first().css('display', 'none'); // Remove sparkle button thing
 
     // Modify text on page and other stuff
+    $('[aria-label="Timeline: Your Home Timeline"]').css('display', 'none');
     $(twitterSelectors.homeText).first().text('Home?');
     $(twitterSelectors.tweetText).first().text('Scream!');
-    $(twitterSelectors.bodyPlaceholderText).first().text(pickCreepyMessage());
     $(twitterSelectors.profilePicture).css('pointer-events', 'none'); // Prevent user from leaving page
+}
+
+function setFavicons(favImg: string) {
+    let headTitle = document.querySelector('head');
+    
+    let favIcons = [
+        { rel: 'apple-touch-icon' },
+        { rel: 'apple-touch-startup-image' },
+        { rel: 'shortcut icon' }
+    ]
+    
+    favIcons.forEach(function(favIcon){
+        $(`[rel="${favIcon.rel}"]`).remove(); // Remove existing favicon
+        let setFavicon = document.createElement('link');
+        setFavicon.setAttribute('rel', favIcon.rel);
+        setFavicon.setAttribute('href', favImg);
+        headTitle.appendChild(setFavicon);
+    });
+}
+
+function clearHeader() {
+    document.title = "Twitter - Screamer"
+
+    console.log("cleared");
+
+    setFavicons("https://abs.twimg.com/favicons/twitter.2.ico");
 }
 
 /**
  * Make sure that the only page that a user can view is /home
  */
 function lockHomepage() {
+    setTimeout(lockHomepage, 300); // Run this function every 300ms forever
+    clearHeader();
+
+    // Don't switch off twitter root page if not loaded yet (user could need to login)
+    if (!loaded) {
+        return;
+    }
+
+    // If the page is loaded and we can find the login we need to wait for the user to log in, so don't navigate to /home
+    if ($(twitterSelectors.loginButton).length != 0 || window.location.pathname == '/i/flow/login' || window.location.pathname == '/login') {
+        loggingIn = true; // Variable that tracks if the user was logging in on this page load, 
+        return;
+    }
+
+    clearPage();
+
     if (window.location.pathname != '/home' && window.location.pathname != '/i/foundmedia/search') {
         window.location.assign('https://twitter.com/home');
     }
-
-    setTimeout(lockHomepage, 300);
 }
 
 function fadeLoading(loadingPage: HTMLDivElement) {
@@ -125,8 +184,10 @@ function run() {
 
     let loadingPage = injectLoadingScreen();
     setTimeout(() => {
+        loaded = true;
         // TODO do some check to make sure the page is loaded
         clearPage();
+        setRandomPlaceholderText();
         fadeLoading(loadingPage);
     }, loadingWait);
 }

@@ -1,5 +1,5 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
 
     "name": "Screamer - Twitter Improvement Suite",
     "description": "Taking the social out of social media, and the media part for that matter too...",
@@ -15,5 +15,10 @@
             "js": ["bundle.js"]
         }
     ],
-    "web_accessible_resources": ["images/aaaaaaaaaaaaaaaaa.png", "images/loading.gif"]
+    "web_accessible_resources": [
+        {
+            "resources": ["images/aaaaaaaaaaaaaaaaa.png", "images/loading.gif"],
+            "matches": ["*://twitter.com/*"]
+        }
+    ]
 }

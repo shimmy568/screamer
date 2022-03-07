@@ -9,12 +9,16 @@
 <h4 align="center">A chrome browser extension designed to improve the Twitter user experience drastically</h4>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
   <a href="#download">Download</a> •
+  <a href="#key-features">Key Features</a> •
   <a href="#license">License</a>
 </p>
 
 ![screenshot](https://i.imgur.com/emDCeDM.gif)
+
+## Download
+
+You can just get it [here at on the chrome store](https://chrome.google.com/webstore/detail/screamer-twitter-improvem/mpeifaboppaofofdbmhoaeolnibaljof)
 
 ## Key Features
 
@@ -26,10 +30,6 @@
 -   Ignorance is bliss
 -   Know that your minute to minute thoughts and feelings will forever be immortalized in twitters servers, and that maybe... Just maybe, some historian 500 years from now will be up all night going through your random bullshit to try to piece together the fall of a civilization.
 -   Saves time :D
-
-## Download
-
-You can [download](https://github.com/amitmerchant1990/electron-markdownify/releases/tag/v1.2.0) the latest installable version of Markdownify for Windows, macOS and Linux.
 
 ## License
 
