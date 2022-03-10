@@ -7,6 +7,7 @@
 </h1>
 
 <h4 align="center">A chrome browser extension designed to improve the Twitter user experience drastically</h4>
+<h5 align="center">Want to scream into an endless void? Try screamer today!</h5>
 
 <p align="center">
   <a href="#download">Download</a> •
